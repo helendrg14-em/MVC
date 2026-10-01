@@ -1,48 +1,63 @@
-﻿@model EntradasMvc.Models.Cotizacion
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model EntradasMvc.ViewModels.ResultadoCotizacionViewModel
 
 @{
-    ViewData["Title"] = "Resultado";
+    ViewData["Title"] = "Resultado de la cotización";
 }
 
-<h1>Resultado de la cotización</h1>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-<div class="card">
-    <div class="card-body">
+<main class="container mt-4">
+    <h1>@Model.Evento</h1>
 
-        <p>
-            <strong>Cliente:</strong>
-            @Model.Cliente
-        </p>
+    <p>
+        Fecha: <strong>@Model.FechaEvento.ToString("dd/MM/yyyy")</strong>
+    </p>
 
-        <p>
-            <strong>Cantidad:</strong>
-            @Model.Cantidad
-        </p>
+    <p>
+        Cliente: <strong>@Model.Cotizacion.Cliente</strong>
+    </p>
 
-        <p>
-            <strong>Precio unitario:</strong>
-            Bs @Model.PrecioUnitario.ToString("N2")
-        </p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Concepto</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cantidad de entradas</td>
+                <td>@Model.Cotizacion.Cantidad</td>
+            </tr>
+            <tr>
+                <td>Tipo de entrada</td>
+                <td>@Model.Cotizacion.TipoEntrada</td>
+            </tr>
+            <tr>
+                <td>Precio unitario</td>
+                <td>Bs @Model.Cotizacion.PrecioUnitario.ToString("F2")</td>
+            </tr>
+            <tr>
+                <td>Subtotal</td>
+                <td>Bs @Model.Cotizacion.Subtotal.ToString("F2")</td>
+            </tr>
+            <tr>
+                <td>Descuento</td>
+                <td>Bs @Model.Cotizacion.Descuento.ToString("F2")</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td><strong>Bs @Model.Cotizacion.Total.ToString("F2")</strong></td>
+            </tr>
+        </tbody>
+    </table>
 
-        <p>
-            <strong>Subtotal:</strong>
-            Bs @Model.Subtotal.ToString("N2")
-        </p>
-
-        <p>
-            <strong>Descuento:</strong>
-            Bs @Model.Descuento.ToString("N2")
-        </p>
-
-        <hr />
-
-        <h3>
-            Total: Bs @Model.Total.ToString("N2")
-        </h3>
-
+    <div class="alert alert-success">
+        @Model.Mensaje
     </div>
-</div>
 
-<a asp-action="Index" class="btn btn-secondary mt-3">
-    Nueva cotización
-</a>
+    <a asp-controller="Entradas" asp-action="Index" class="btn btn-primary">
+        Nueva cotización
+    </a>
+</main>
